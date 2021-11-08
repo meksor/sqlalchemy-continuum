@@ -182,7 +182,9 @@ class Builder(object):
         """
         for cls in version_classes:
             for prop in sa.inspect(cls).iterate_properties:
-                getattr(cls, prop.key).impl.active_history = True
+                impl = getattr(cls, prop.key).impl
+                if impl is not None:
+                    active_history = True
 
     def create_column_aliases(self, version_classes):
         """
